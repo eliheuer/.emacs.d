@@ -9,3 +9,22 @@
 
 # Undo-tree save-files
 *.~undo-tree
+
+auto-save-list
+bookmarks
+eshell
+init.el~
+init.org~
+recentf
+backups
+elpa
+ido.last
+init.elc
+url
+/init.tex
+/projectile-bookmarks.eld
+/projectile.cache
+smex-items
+tmp
+request
+.mc-lists.el
