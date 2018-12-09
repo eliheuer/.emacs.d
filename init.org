@@ -1,5 +1,5 @@
 #+TITLE: Emacs configuration file
-#+AUTHOR: Rakhim Davletkaliyev
+#+AUTHOR: Rakhim Davletkaliyev and Eli Heuer
 #+BABEL: :cache yes
 #+PROPERTY: header-args :tangle yes
 #+STARTUP: overview
@@ -31,6 +31,25 @@ mv dot-emacs ~/.emacs.d
 On the first run Emacs will install some packages. It's best to restart Emacs after that process is done for the first time.
 
 * Configurations
+
+** Theme
+
+We use the Dracula theme.
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(load-theme 'dracula t)
+#+END_SRC
+
+** Evil
+
+Vim emulation mode.
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'load-path "~/.emacs.d/evil")
+(require 'evil)
+(evil-mode 1)
+#+END_SRC
 
 ** Use package
 
@@ -136,22 +155,10 @@ This helps get rid of =functions might not be defined at runtime= warnings. See 
 
 ** Visuals
 
-#+BEGIN_SRC emacs-lisp
-(when (memq window-system '(mac ns))
-  (add-to-list 'default-frame-alist '(ns-appearance . light)) ;; {light, dark}
-  (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t)))
-#+END_SRC
-
-I've tried many 3rd party themes, but keep coming back to the default light theme.
-
-#+BEGIN_SRC emacs-lisp
-(load-theme 'tsdh-light)
-#+END_SRC
-
 Inconsolata font, remove the cruft and make the initial size bigger.
 
 #+BEGIN_SRC emacs-lisp
-(set-face-attribute 'default nil :font "Inconsolata LGC 13")
+(set-face-attribute 'default nil :font "InputMonoCondensed 18")
 (setq-default line-spacing 0)
 (setq initial-frame-alist '((top . 10) (left . 10) (width . 125) (height . 45)))
 (tool-bar-mode -1)
@@ -191,14 +198,6 @@ Wrap lines always.
 (global-visual-line-mode 1)
 #+END_SRC
 
-Nice and simple mode line.
-
-#+BEGIN_SRC emacs-lisp
-(setq column-number-mode t) ;; show columns in addition to rows in mode line
-(set-face-attribute 'mode-line nil :background "NavajoWhite")
-(set-face-attribute 'mode-line-inactive nil :background "#FAFAFA")
-#+END_SRC
-
 Show vi-like tilde in the fringe on empty lines.
 
 #+BEGIN_SRC emacs-lisp
@@ -234,12 +233,6 @@ Which key is great for learning Emacs, it shows a nice table of possible command
   :config
   (which-key-mode)
   (setq which-key-idle-delay 0.5))
-#+END_SRC
-
-Disable blinking cursor.
-
-#+BEGIN_SRC emacs-lisp
-(blink-cursor-mode 0)
 #+END_SRC
 
 ** Sane defaults
