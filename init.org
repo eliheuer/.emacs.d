@@ -1,12 +1,13 @@
 #+TITLE: Emacs configuration file
-#+AUTHOR: Rakhim Davletkaliyev
+#+AUTHOR: Eli Heuer
 #+BABEL: :cache yes
 #+PROPERTY: header-args :tangle yes
 #+STARTUP: overview
 
-* Credits
-Initially inspired by [[https://github.com/larstvei/dot-emacs][larstvei's]] setup. Check out [[https://github.com/freetonik/emacscast][EmacsCast]], my podcast about Emacs. I talk about my config in [[https://github.com/freetonik/emacscast/blob/master/episode_2.org][Episode 2]].
+ Credit
 
+Forked from the Emacs podcast guy's config.
+** TODO Add link to podcast
 * Installing
 I think it'll be better not to clone and use this config as is, but rather build your own config using mine as a starting point. But if you really want to try it, then follow these steps:
 
@@ -31,6 +32,37 @@ mv dot-emacs ~/.emacs.d
 On the first run Emacs will install some packages. It's best to restart Emacs after that process is done for the first time.
 
 * Configurations
+
+** Theme
+
+We use the Dracula theme.
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(load-theme 'dracula t)
+#+END_SRC
+
+** Evil
+
+Vim emulation mode.
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'load-path "~/.emacs.d/evil")
+(require 'evil)
+(evil-mode 1)
+#+END_SRC
+
+** Org
+
+#+BEGIN_SRC emacs-lisp
+(custom-set-faces
+  '(org-level-1 ((t (:inherit outline-1 :height 1.0))))
+  '(org-level-2 ((t (:inherit outline-2 :height 1.0))))
+  '(org-level-3 ((t (:inherit outline-3 :height 1.0))))
+  '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
+  '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
+)
+#+END_SRC
 
 ** Use package
 
@@ -136,22 +168,10 @@ This helps get rid of =functions might not be defined at runtime= warnings. See 
 
 ** Visuals
 
-#+BEGIN_SRC emacs-lisp
-(when (memq window-system '(mac ns))
-  (add-to-list 'default-frame-alist '(ns-appearance . light)) ;; {light, dark}
-  (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t)))
-#+END_SRC
-
-I've tried many 3rd party themes, but keep coming back to the default light theme.
-
-#+BEGIN_SRC emacs-lisp
-(load-theme 'tsdh-light)
-#+END_SRC
-
 Inconsolata font, remove the cruft and make the initial size bigger.
 
 #+BEGIN_SRC emacs-lisp
-(set-face-attribute 'default nil :font "Inconsolata LGC 13")
+(set-face-attribute 'default nil :font "InputMonoCondensed 16")
 (setq-default line-spacing 0)
 (setq initial-frame-alist '((top . 10) (left . 10) (width . 125) (height . 45)))
 (tool-bar-mode -1)
@@ -191,14 +211,6 @@ Wrap lines always.
 (global-visual-line-mode 1)
 #+END_SRC
 
-Nice and simple mode line.
-
-#+BEGIN_SRC emacs-lisp
-(setq column-number-mode t) ;; show columns in addition to rows in mode line
-(set-face-attribute 'mode-line nil :background "NavajoWhite")
-(set-face-attribute 'mode-line-inactive nil :background "#FAFAFA")
-#+END_SRC
-
 Show vi-like tilde in the fringe on empty lines.
 
 #+BEGIN_SRC emacs-lisp
@@ -234,12 +246,6 @@ Which key is great for learning Emacs, it shows a nice table of possible command
   :config
   (which-key-mode)
   (setq which-key-idle-delay 0.5))
-#+END_SRC
-
-Disable blinking cursor.
-
-#+BEGIN_SRC emacs-lisp
-(blink-cursor-mode 0)
 #+END_SRC
 
 ** Sane defaults
@@ -777,7 +783,7 @@ Spellchecking requires an external command to be available. Install =aspell= on 
 #+END_SRC
 
 Enable spellcheck on the fly for all text modes. This includes org, latex and LaTeX.
-
+This is a test of speling tols
 #+BEGIN_SRC emacs-lisp
 (add-hook 'text-mode-hook 'flyspell-mode)
 (add-hook 'prog-mode-hook 'flyspell-prog-mode)
@@ -876,7 +882,6 @@ Emmet.
 ;; (global-set-key (kbd "s-3") (lambda () (interactive) (select-frame-by-name "ORG")))
 #+END_SRC
 
-
 * Org
 
 Visually indent sections. This looks better for smaller files.
@@ -887,16 +892,16 @@ Visually indent sections. This looks better for smaller files.
   (setq org-startup-indented t))
 #+END_SRC
 
-Store all my org files in =~/Dropbox/Knowledgebase/org=.
+Store all my org files in =~/Org/=.
 
 #+BEGIN_SRC emacs-lisp
-(setq org-directory "~/Dropbox/Knowledgebase/org")
+(setq org-directory "~/Org")
 #+END_SRC
 
 And all of those files should be in included agenda.
 
 #+BEGIN_SRC emacs-lisp
-(setq org-agenda-files '("~/Dropbox/Knowledgebase/org"))
+(setq org-agenda-files '("~/Org")
 #+END_SRC
 
 Refile targets should include files and down to 9 levels into them.
@@ -934,7 +939,7 @@ And inside those code blocks indentation should be correct depending on the sour
 When Emacs starts, I want to see my Main org file instead of the scratch buffer.
 
 #+BEGIN_SRC emacs-lisp
-(find-file "~/Dropbox/Knowledgebase/org/main.org")
+(find-file "~/Org/main.org")
 #+END_SRC
 
 State changes for todos and also notes should go into a Logbook drawer:
