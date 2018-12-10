@@ -1,5 +1,9 @@
 #+TITLE: Emacs configuration file
+<<<<<<< HEAD
 #+AUTHOR: Eli Heuer
+=======
+#+AUTHOR: Rakhim Davletkaliyev and Eli Heuer
+>>>>>>> 8ace16cfeb2a6daa2bcd727c3f9abb64bf568388
 #+BABEL: :cache yes
 #+PROPERTY: header-args :tangle yes
 #+STARTUP: overview
@@ -52,6 +56,7 @@ Vim emulation mode.
 (evil-mode 1)
 #+END_SRC
 
+<<<<<<< HEAD
 ** Org
 
 #+BEGIN_SRC emacs-lisp
@@ -64,6 +69,8 @@ Vim emulation mode.
 )
 #+END_SRC
 
+=======
+>>>>>>> 8ace16cfeb2a6daa2bcd727c3f9abb64bf568388
 ** Use package
 
 Initialize package and add Melpa source.
@@ -171,7 +178,11 @@ This helps get rid of =functions might not be defined at runtime= warnings. See 
 Inconsolata font, remove the cruft and make the initial size bigger.
 
 #+BEGIN_SRC emacs-lisp
+<<<<<<< HEAD
 (set-face-attribute 'default nil :font "InputMonoCondensed 16")
+=======
+(set-face-attribute 'default nil :font "InputMonoCondensed 18")
+>>>>>>> 8ace16cfeb2a6daa2bcd727c3f9abb64bf568388
 (setq-default line-spacing 0)
 (setq initial-frame-alist '((top . 10) (left . 10) (width . 125) (height . 45)))
 (tool-bar-mode -1)
