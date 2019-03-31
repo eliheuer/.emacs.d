@@ -1,3 +1,41 @@
+;; Eli's EMACS config file :::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+;; Set header line:
+(setq-default header-line-format
+              (list "GNU EMACS: برمجيات حرة • يا بهاء الأبهى"))
+
+;; Turn off GNU artwork at start:
+(setq inhibit-startup-screen t)
+
+;; Set Font
+;(set-face-attribute 'default nil :font "Kalimat 25")
+;(set-face-attribute 'default nil :font "Input Mono Narrow Bold 24")
+(set-face-attribute 'default nil :font "NoName Fixed 26")
+;(set-face-attribute 'default nil :font "Iosevka Light 22")
+
+(mapc
+  (lambda (face)
+    (set-face-attribute face nil :weight 'normal :underline nil))
+  (face-list))
+
+;; Turn off GNU artwork at start:
+(tool-bar-mode -1)
+
+;; Turn off GNU artwork at start:
+(toggle-scroll-bar -1)
+
+;; Line numbers
+(when (version<= "26.0.50" emacs-version )
+  (global-display-line-numbers-mode))
+
+;;(require 'column-marker)
+;;(add-hook 'python-mode-hook (lambda () (interactive) (column-marker-1 81)))
+
+;; Backups
+(setq make-backup-files nil) ; stop creating backup~ files
+(setq auto-save-default nil) ; stop creating #autosave# files
+(setq tramp-auto-save-directory "~/.emacs.d/tramp-autosave")
+
 ;; Melpa
 (require 'package)
 (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
@@ -18,11 +56,10 @@ There are two things you can do about this warning:
     (add-to-list 'package-archives (cons "gnu" (concat proto "://elpa.gnu.org/packages/")))))
 (package-initialize)
 
-
 ;; Number style
 (add-hook 'prog-mode-hook 'highlight-numbers-mode)
 
-;; EVIL
+;; EVIL mode
 (add-to-list 'load-path "~/.emacs.d/evil")
 (require 'evil)
 (evil-mode 1)
@@ -42,12 +79,6 @@ There are two things you can do about this warning:
       (insert initial-key))))
 (define-key evil-insert-state-map (kbd "j") 'my-jk)
 
-
-;; Backups
-(setq make-backup-files nil) ; stop creating backup~ files
-(setq auto-save-default nil) ; stop creating #autosave# files
-
-
 ;; Org
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -59,33 +90,21 @@ There are two things you can do about this warning:
  '(org-level-3 ((t (:inherit outline-3 :height 1.0))))
  '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
  '(org-level-5 ((t (:inherit outline-5 :height 1.0)))))
-
+(setq org-log-done 'time)
 
 ;; Theme
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (load-theme 'dracula t)
-
 
 ;; Neotree
 (add-to-list 'load-path "~/.emacs.d/neotree")
 (require 'neotree)
 (global-set-key [f8] 'neotree-toggle)
 
-
-;; Basic Styles
-(setq inhibit-startup-screen t)
-(set-face-attribute 'default nil :font "InputMonoCondensed 20")
-(tool-bar-mode -1)
-(toggle-scroll-bar -1)
-(when (version<= "26.0.50" emacs-version )
-  (global-display-line-numbers-mode))
-
-
 ;; ido
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
 (ido-mode 1)
-
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -96,24 +115,17 @@ There are two things you can do about this warning:
    (quote
     (highlight-numbers rust-mode telephone-line elpy magit rainbow-delimiters ranger smex rainbow-mode))))
 
-
-;; Rust Mode
-
-
 ;; Magit
 (global-set-key (kbd "C-x g") 'magit-status)
 
-
 ;; Ranger
 (global-set-key (kbd "C-x r") 'ranger)
-
 
 ;; Smex
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
 ;; This is your old M-x.
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
-
 
 ;; ELPY
 (package-initialize)
@@ -122,12 +134,11 @@ There are two things you can do about this warning:
 ;; file on Debian-derived systems, thus (elpy-enable) should be all
 ;; that is required.
 
-
 (require 'telephone-line)
 (setq telephone-line-primary-left-separator 'telephone-line-flat
       telephone-line-secondary-left-separator 'telephone-line-nil
       telephone-line-primary-right-separator 'telephone-line-flat
       telephone-line-secondary-right-separator 'telephone-line-nil)
-(setq telephone-line-height 48
+(setq telephone-line-height 50
       telephone-line-evil-use-short-tag t)
 (telephone-line-mode 1)
