@@ -1,1 +1,1 @@
-* Emacs Config
+* Eli's Emacs Config
